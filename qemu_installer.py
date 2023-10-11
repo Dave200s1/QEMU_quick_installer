@@ -44,7 +44,7 @@ class Script():
 
     def download_iso(self):
         cmd_cd = "cd /ISOs"
-        cmd ="wget https://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/isocd/debian-testing-amd64-netinst.iso"
+        cmd ="wget https://cdimage.debian.org/cdimage/release/current-live/amd64/iso-hybrid/debian-live-12.2.0-amd64-xfce.iso"
         
         subprocess.run(cmd_cd,shell=True)
         subprocess.run(cmd,shell=True)
