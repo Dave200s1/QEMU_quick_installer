@@ -2,6 +2,7 @@
 
 import subprocess
 import configparser
+import os
 
 class Script():
 
@@ -20,40 +21,51 @@ class Script():
         subprocess.run(cmd_upgrade,shell=True)
 
     def install_packages(self):
-        cmd ="sudo apt -y install qemu-kvm libvirt-daemon  bridge-utils virtinst libvirt-daemon-system"
+        cmd ="sudo apt -y install qemu-kvm libvirt-clients qemu-utils libvirt-daemon  bridge-utils virtinst libvirt-daemon-system "
         subprocess.run(cmd,shell=True)
-
 
     def check_if_daemon_runs(self):
         cmd ="sudo systemctl status libvirtd.service"
         subprocess.run(cmd,shell=True)
 
     def check_available_network_kvm(self):
-        cmd ="virsh net-list --all"
+        cmd ="sudo virsh net-list --all"
         subprocess.run(cmd,shell=True)
-
+    def enable_modprob(self):
+        cmd = "sudo systemctl enable --now libvirtd"
+        subprocess.run(cmd, shell=True)
+        cmd_second = "sudo systemctl enable --now virtlogd"
+        subprocess.run(cmd_second, shell=True)
+        cmd_third = "sudo modprobe kvm"
+        subprocess.run(cmd_third, shell=True)
+        
 
     def activate_default_network(self):
-        cmd = "virsh net-start default"
+        cmd = "sudo virsh net-start default"
         subprocess.run(cmd,shell=True)
 
     def activate_autostart(self):
-        cmd = "virsh net-autostart"
+        cmd = "sudo virsh net-autostart"
         subprocess.run(cmd,shell=True)
 
 
     def download_iso(self):
-        cmd_cd = "cd /ISOs"
-        cmd ="wget https://cdimage.debian.org/cdimage/release/current-live/amd64/iso-hybrid/debian-live-12.2.0-amd64-xfce.iso"
+        #current_dir = os.getcwd()
+        cmd ="sudo wget https://cdimage.debian.org/cdimage/release/current-live/amd64/iso-hybrid/debian-live-12.2.0-amd64-xfce.iso"
         
-        subprocess.run(cmd_cd,shell=True)
+       
+        new_dir = "/ISOs"
+        os.chdir(new_dir)
+        subprocess.run("pwd",shell=True)
+        
+        
         subprocess.run(cmd,shell=True)
 
 
     def create_directorieste_vm(self):
         cmd_isos = "sudo mkdir /ISOs"
         cmd_vms = "sudo mkdir /VMs"
-        cmd_list = "virsh list --all"
+        cmd_list = "sudo virsh list --all"
 
         subprocess.run(cmd_isos,shell=True)
         subprocess.run(cmd_vms,shell=True)
@@ -67,7 +79,7 @@ class Script():
         cmd ="lsmod | grep vhost"
         subprocess.run(cmd,shell=True)
 
-
+	#Needs to be fixed !!!
     def add_VHostNet_module(self):
         subprocess.call(['sudo','-v'])
         config = configparser.ConfigParser()
@@ -99,15 +111,15 @@ class Script():
         vcpu = input("Enter the number of vCPUs: ")
         size = input("Enter the size of the disk (in GB): ")
 
-        command = f"virt-install --name {name} --os-type linux --os-variant unknown --ram {ram} --vcpu {vcpu} --disk path=/VMs/,size={size} --graphics vnc,listen=0.0.0.0 --noautoconsole --hvm --cdrom /ISOs/debian-testing-amd64-netinst.iso --boot cdrom,hd"
+        command = f"sudo virt-install --name {name} --os-type linux --os-variant unknown --ram {ram} --vcpu {vcpu} --disk path=/VMs/debian.qcow2,size={size} --graphics vnc,listen=0.0.0.0 --noautoconsole --hvm --cdrom /ISOs/debian-live-12.2.0-amd64-xfce.iso --boot cdrom,hd"
     
         subprocess.run(command,shell=True)
 
     def display_the_port(self):
-        cmd = "virsh list --all"
+        cmd = "sudo virsh list --all"
         subprocess.run(cmd,shell=True)
         yourVmName = input("Enter the Name of your VM: ")
-        cmd_port = f"virsh vncdisplay {yourVmName}"
+        cmd_port = f"sudo virsh vncdisplay {yourVmName}"
         subprocess.run(cmd_port,shell=True)
         subprocess.run("ip addr",shell=True)
 
@@ -116,15 +128,17 @@ class Script():
         self.welcome()
         self.run_updates()
         self.install_packages()
+        self.enable_modprob()
         self.check_if_daemon_runs()
-        self.check_available_network_kvm()
+        print("\nPlease do a system reboot and start the programm again")
         self.activate_default_network()
+        self.check_available_network_kvm()
         self.activate_autostart()
         self.do_a_backup()
         self.create_directorieste_vm()
-        self.add_VHostNet_module()
+        #self.add_VHostNet_module()
         self.check_for_vHost()
-        self.config_bidge()
+        #DO Not USE self.config_bidge()
         self.download_iso()
         self.create_VM()
         self.display_the_port()
