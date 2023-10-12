@@ -110,8 +110,8 @@ class Script():
         ram = input("Enter the RAM size (in MB): ")
         vcpu = input("Enter the number of vCPUs: ")
         size = input("Enter the size of the disk (in GB): ")
-
-        command = f"sudo virt-install --name {name} --os-type linux --os-variant unknown --ram {ram} --vcpu {vcpu} --disk path=/VMs/debian.qcow2,size={size} --graphics vnc,listen=0.0.0.0 --noautoconsole --hvm --cdrom /ISOs/debian-live-12.2.0-amd64-xfce.iso --boot cdrom,hd"
+        dp = input("Enter the diskpath_name (example: debian): ")
+        command = f"sudo virt-install --name {name} --os-type linux --os-variant unknown --ram {ram} --vcpu {vcpu} --disk path=/VMs/{dp}.qcow2,size={size} --graphics vnc,listen=0.0.0.0 --noautoconsole --hvm --cdrom /ISOs/debian-live-12.2.0-amd64-xfce.iso --boot cdrom,hd"
     
         subprocess.run(command,shell=True)
 
