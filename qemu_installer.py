@@ -54,7 +54,7 @@ class Script():
         cmd ="sudo wget https://cdimage.debian.org/cdimage/release/current-live/amd64/iso-hybrid/debian-live-12.2.0-amd64-xfce.iso"
         
        
-        new_dir = "/ISOs"
+        new_dir = "/home/dsi/ISOs"
         os.chdir(new_dir)
         subprocess.run("pwd",shell=True)
         
@@ -63,8 +63,8 @@ class Script():
 
 
     def create_directorieste_vm(self):
-        cmd_isos = "sudo mkdir /ISOs"
-        cmd_vms = "sudo mkdir /VMs"
+        cmd_isos = "sudo mkdir /home/dsi/ISOs"
+        cmd_vms = "sudo mkdir /home/dsi/VMs"
         cmd_list = "sudo virsh list --all"
 
         subprocess.run(cmd_isos,shell=True)
