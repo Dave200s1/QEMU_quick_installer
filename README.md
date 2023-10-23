@@ -16,6 +16,7 @@ vhost_net
 
 ## 4: Change permissions
 uncommen user="root" and group="root" 
+
     # The user for QEMU processes run by the system instance. It can be
     # specified as a user name or as a user id. The qemu driver will try to
     # parse this value first as a name and then, if the name doesn't exist,
