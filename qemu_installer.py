@@ -139,7 +139,7 @@ class Script():
         #self.add_VHostNet_module()
         self.check_for_vHost()
         #DO Not USE self.config_bidge()
-        self.download_iso()
+        #self.download_iso()
         self.create_VM()
         self.display_the_port()
         print("\nAll done ....")
