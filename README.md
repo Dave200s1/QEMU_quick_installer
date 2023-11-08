@@ -15,6 +15,7 @@ firewire-sbp2
 vhost_net
 
 ## 4: Change permissions
+ /etc/libvirt/qemu.conf
 uncommen user="root" and group="root" 
 
     # The user for QEMU processes run by the system instance. It can be
