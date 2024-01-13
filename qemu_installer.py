@@ -63,8 +63,8 @@ class Script():
 
 
     def create_directorieste_vm(self):
-        cmd_isos = "sudo mkdir /home/dsi/ISOs"
-        cmd_vms = "sudo mkdir /home/dsi/VMs"
+        cmd_isos = "sudo mkdir /ISOs"
+        cmd_vms = "sudo mkdir /VMs"
         cmd_list = "sudo virsh list --all"
 
         subprocess.run(cmd_isos,shell=True)
