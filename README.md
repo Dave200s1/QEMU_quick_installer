@@ -1,5 +1,7 @@
 ## Important Before starting the script please configure the bridge interface !
 
+* [recent release](https://github.com/Dave200s1/QEMU_quick_installer/tree/release/multipleDistros) 📦
+
 ## 1: Use ip addr to see your networkInterface , example  enplsXXX
 
 ## 2: Edit the /etc/network/interfaces
