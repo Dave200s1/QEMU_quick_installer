@@ -1,4 +1,5 @@
 ## Important Before starting the script please configure the bridge interface !
+![npm bundle size (version)](https://img.shields.io/badge/version-0.0.1-red)  ![npm bundle size (version)](https://img.shields.io/badge/language-python3-red) ![npm bundle size (version)](https://img.shields.io/badge/plattform-Linux-red) 
 
 * [get the most recent release !](https://github.com/Dave200s1/QEMU_quick_installer/tree/release/multipleDistros) 📦
 
